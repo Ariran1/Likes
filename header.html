@@ -1,0 +1,560 @@
+{if $newMainPage}
+{include file="themes/default/block/tmp/new_header.html"}
+{else}
+
+<html>
+    <head>
+
+        {if $curSex==1}
+            {assign var='textType' value=2}
+        {else}
+            {assign var='textType' value=1}
+        {/if}
+        {if $children}
+            {assign var='textType' value=$textType+2}
+        {/if}
+
+
+        {if $metaParams.title}
+            <title>{$metaParams.title}</title>
+        {else}
+            {if $curProd}
+                <title>{makeGoodTitle page=$page product=$product id_sex=$curSex sale=$sale}</title>
+            {elseif $page.main_page}
+                <title>PrintBar – интернет-магазин одежды и аксессуаров с уникальным дизайном</title>
+            {elseif $curCol}
+                <title>{makeGoodTitle page=$page collection=$curCol id_sex=$curSex sale=$sale pg=$pg}</title>
+            {elseif $products}
+                <title>{makeGoodTitle page=$page productPage=true id_sex=$curSex sale=$sale pg=$pg}</title>
+            {else}
+                <title>{if $chooseCol}Коллекция {$chooseCol} | {/if}{if $page.title}{$page.title}{else}{if $settings.title}{$settings.title}{else}{$settings.caption} | {$page.caption}{/if}{/if}</title>
+            {/if}
+        {/if}
+
+        {php}
+            $this->_tpl_vars['seoIdCat'] = [16,17,18,646,247,253,367,499,587];
+        {/php}
+
+        {if $metaParams.description}
+            <meta name="description" content="{$metaParams.description}">
+        {else}
+            {if $page.main_page}
+                <meta name="description" content="Продажа футболок, маек, свитшотов и других товаров с необычными принтами. Подбор картинок по темам «Россия», «спорт», «музыка», «кино» и пр. Технология производства. Возможность создать свой дизайн.">
+            {elseif $curProd}
+                <meta name="description" content="{if $product.id_type!=9}{$lang.samePrint[$textType][$product.ctype]}{/if} {$product.caption} {$product.code} - заказать с доставкой по Москве и всей России.">
+            {elseif $pg>=1}
+                {assign var=tpage value=$pg+1}
+                <meta name="description" content="Страница {$tpage} - {makePageH1 page=$page collection=$curCol id_sex=$curSex sale=$sale}">
+            {elseif !$curSex && !$children && !$sale && $chooseCol && $page.id_category|in_array:$seoIdCat}
+                <meta name="description" content="{makePageH1 page=$page collection=$curCol id_sex=$curSex sale=$sale} для мужчин, женщин и детей - купить в интернет магазине Print Bar.">
+            {elseif $curCol}
+                <meta name="description" content="{makePageH1 page=$page collection=$curCol id_sex=$curSex sale=$sale} - заказать в интернет магазине Print Bar с доставкой по Москве и всей России.">
+            {/if}
+        {/if}
+
+        {if $metaParams.keywords}
+            <meta name="keywords" content="{$metaParams.keywords}">
+        {else}
+            {if $curProd}
+                <meta name="keywords" content="заказать {if $product.id_type!=9}{$lang.samePrint[$textType][$product.ctype]}{/if} {$product.caption} {$product.code}, купить {if $product.id_type!=9}{$lang.samePrint[$textType][$product.ctype]}{/if} {$product.caption} {$product.code} с доставкой по Москве и всей России">
+            {elseif $pg>=1}
+                {assign var=tpage value=$pg+1}
+                <meta name="keywords" content="cтраница {$tpage}, {makePageH1 page=$page collection=$curCol id_sex=$curSex sale=$sale toLower=1}">
+            {elseif !$curSex && !$children && !$sale && $chooseCol && $page.id_category|in_array:$seoIdCat}
+                <meta name="keywords" content="{makePageH1 page=$page collection=$curCol id_sex=$curSex sale=$sale toLower=1} для мужчин, женщин и детей, купить в интернет магазине Print Bar">
+            {elseif $curCol}
+                <meta name="keywords" content="{makePageH1 page=$page collection=$curCol id_sex=$curSex sale=$sale toLower=1}, купить в интернет магазине Print Bar с доставкой по Москве и всей России">
+            {/if}
+        {/if}
+
+        {if $page.id_sub_category==193 || $page.id_category==638 || $designer || $metaParams.noindex==1}
+            <meta name="robots" content="noindex, nofollow"/>
+        {/if}
+
+
+        {if $page.id_category==638}
+            <meta content="{$urlNoGet}" property="og:url" />
+            <meta content="website" property="og:type" />
+            <meta content="Я участвую в розыгрыше от магазина одежды - PRINT BAR"property="og:title" />
+            <meta content="Победители определяются каждый день в 14:00. Присоединяйтесь #printbarlottery" property="og:description" />
+            <meta content="http://printbar.ru/images/themes/default/banner-t-shirt5.jpg" property="og:image" />
+        {/if}
+
+        <meta http-equiv="content-type"  content="text/html;charset=windows-1251" />
+        <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0">
+
+
+        <meta name="format-detection" content="telephone=no">
+
+
+        {if $partner && $partShop.favicon}
+            <link rel="icon" href="/upload/partners/images/{$partShop.favicon}" type="image/x-icon"/>
+        {else}
+            <link rel="icon" href="/favicon.ico" type="image/x-icon"/>
+        {/if}
+
+        {if $newcss}
+            <link rel="stylesheet" media="screen" href="{if !$vk && false}http://css.myprintbar.ru{/if}/images/test/screen_ref.css?cash=13122016">
+            <link rel="stylesheet" media="screen" href="{if !$vk && false}http://css.myprintbar.ru{/if}/images/themes/default/css/mobile.css?cash=31012017">
+            <link rel="stylesheet" media="screen" href="{if !$vk && false}http://css.myprintbar.ru{/if}/images/themes/newDiz/new.css?cash=13122016">
+        {else}
+            <link rel="stylesheet" media="screen" href="{if !$vk && false}http://css.myprintbar.ru{/if}/images/themes/default/css/screen.css?cash=31012017">
+            <link rel="stylesheet" media="screen" href="{if !$vk && false}http://css.myprintbar.ru{/if}/images/themes/default/css/mobile.css?cash=31012017">
+            <link rel="stylesheet" media="screen" href="{if !$vk && false}http://css.myprintbar.ru{/if}/images/themes/newDiz/new.css?cash=13122016">
+        {/if}
+
+        {if $vk}
+            <link rel="stylesheet" media="screen" href="{if !$vk && false}http://css.myprintbar.ru{/if}/images/themes/default/css/vkShop.css?cache={$nocache}" >
+        {else}
+            <link rel="stylesheet" media="screen" href="{if !$vk && false}http://css.myprintbar.ru{/if}/images/themes/default/css/mobile2.css?cache=13122016">
+        {/if}
+        {if $page.id_category==24}
+            <link rel="stylesheet" media="screen" href="/images/themes/default/css/fonts.css" >
+        {/if}
+        {if $page.id_category==667}
+            <link rel="stylesheet" media="screen" href="/images/themes/own-land/land1/bundle.css" >
+        {elseif $page.id_category==668}
+            <link rel="stylesheet" media="screen" href="/images/themes/own-land/land2/bundle.css" >
+        {/if}
+        <link rel="stylesheet" media="screen" href="{if !$vk && false}http://css.myprintbar.ru{/if}/images/themes/default/css/jquery.jscrollpane.css" >
+        <link rel="stylesheet" media="screen" href="{if !$vk && false}http://css.myprintbar.ru{/if}/images/themes/default/css/jquery-ui.min.css" >
+        <link rel="stylesheet" media="screen" href="{if !$vk && false}http://css.myprintbar.ru{/if}/images/themes/default/css/intlTelInput.css" >
+
+        <link href="{if !$vk && false}http://css.myprintbar.ru{/if}/images/themes/default/css/suggestions.min.css" type="text/css" rel="stylesheet" />
+        <!--[if IE]><script src="{if !$vk && false}http://css.myprintbar.ru{/if}/images/themes/default/js/html5shiv.js"></script><![endif]-->
+        <!--[if IE]>{literal}<style type="text/css">.prestige .prestige-ul li {width: 24%;}{/literal}</style><![endif]-->
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&amp;subset=cyrillic" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,700" rel="stylesheet">
+        <link rel="stylesheet" href="{if !$vk}{/if}/images/themes/default/css/font-awesome.min.css">
+        <link rel="stylesheet" href="{if !$vk}{/if}/images/themes/default/css/flipclock.css">
+        <link rel="stylesheet" href="https://sailplays3.cdnvideo.ru/media/assets/assetfile/d2a1565d1c525ed7059bc841b3afd6ce.css"/>
+
+
+
+        {if $pages|@count>1}
+    {if $pg>=1}
+    <link rel="prev" href="{$siteurl}{makeUrl sale=$sale designer=$designer curIdent=$curIdent id_sex=$curSex children=$children colIdent=$curColIdent heshtag=$hpu.get.heshtag search=$hpu.get.search saleSize=$hpu.get.saleSize sort=$hpu.get.sort p=$pg-1}">
+    {/if}
+    {if $pg<$mp-1}
+    <link rel="next" href="{$siteurl}{makeUrl sale=$sale designer=$designer curIdent=$curIdent id_sex=$curSex children=$children colIdent=$curColIdent heshtag=$hpu.get.heshtag search=$hpu.get.search saleSize=$hpu.get.saleSize sort=$hpu.get.sort p=$pg+1}">
+    {/if}
+    {/if}
+
+
+    <meta name='yandex-verification' content='7367d0e436fb747e' />
+    {if $testAB==1 || true}
+    <script charset="UTF-8" src="//cdn.sendpulse.com/js/push/7059965053276a13cc2629dd002a2bc7_1.js" async></script>
+    {/if}
+
+    {if $advcake_trackid}
+    {literal}
+    <script>
+        window.advcake_trackid = '{/literal}{$advcake_trackid}{literal}';
+    </script>
+    {/literal}
+    {/if}
+    {if $hpu.get.panov}
+    <script type="text/javascript" src="//vk.com/js/api/openapi.js?133"></script>
+    {/if}
+
+    {if $page.id_category==690 || $page.id_category==10}
+        <link rel="canonical" href="https://printbar.ru/{$page.ident}/" />
+    {/if}
+</head>
+<body class="{if $vk}vk{/if} newMobV {if $checkedNewCoupMail}over{/if} {if false}fut99Akc{*удалить после 15 апреля*}{/if}">
+<div class="filter-block popView js-updateIt hide">
+
+</div>
+
+{if $page.id_category!=667}
+
+<div class="menu-slide">
+    <div class="menu-slide__search">
+        <form class="search-form" action="{$siteurl}{makeUrl curIdent='tovari' id_sex=$curSex children=$children}">
+                <input type="search"  class="" name="heshtag" placeholder="Поиск" value="{$heshtag}" />
+                <input type="hidden" name="search" value="yes">
+                <button type="submit" class="hide mhide n-form-sarch__button n-form-sarch__button--mob"></button>
+        </form>
+    </div>
+    <ul>
+
+        <li class="basket-item {if !$basket.count}hide{/if}">
+            <a href="{$siteurl}basket"><span>В корзине {$basket.count} {$basket.tovarov} на сумму {$basket.forBlock}</span></a>
+        </li>
+        {foreach item=sex key=id_sex from=$allSexs}
+        {if $id_sex>2}{assign var=forChildSex value=$id_sex-2}{/if}
+        <li data-sex="{$id_sex}">
+            <a href="#"><span>{$sex}</span></a>
+            <ul>
+                {if !$oldSale}
+                <li><a href="{$siteurl}sale/{if $id_sex>2}{$childSex[$forChildSex][0]}-tovari-{$childSex[$forChildSex][1]}{else}{$adultSex[$id_sex]}-tovari{/if}/"><i class="n-icon n-icon--sale"></i>Распродажа 50%</a></li>
+                {/if}
+
+                {foreach item=cat from=$rubrics.up}
+                {if $cat.id_sub_category == 16 && $cat.visible==1}
+                {if ($id_sex<=2 && $cat.sexs[$id_sex]) || ($id_sex>2 && $cat.sexs.child[$forChildSex])}
+
+
+                <li data-type="{$cat.id_category}" data-url="{$siteurl}{if $id_sex>2}{$childSex[$forChildSex][0]}-{$cat.ident}-{$childSex[$forChildSex][1]}{else}{$adultSex[$id_sex]}-{$cat.ident}{/if}/" {if false}class="menu-slide__haschild"{/if}>
+                    <a href="{if false}#{else}{$siteurl}{if $id_sex>2}{$childSex[$forChildSex][0]}-{$cat.ident}-{$childSex[$forChildSex][1]}{else}{$adultSex[$id_sex]}-{$cat.ident}{/if}/{/if}" class="menu-slide__showcollections">
+                        <i class="n-icon n-icon--{$cat.ident}"></i>{$cat.caption}
+                        {typeLabel changeAkc=$changeAkc id_category=$cat.id_category sale=$sale}
+                    </a>
+                {if false}
+                    <ul>
+                    </ul>
+                {/if}
+
+                </li>
+
+
+                {/if}
+                {/if}
+                {/foreach}
+            </ul>
+        </li>
+        {/foreach}
+
+        {if $oldSale}
+        <li id="forMobSkladMenuLoad">
+            <textarea id="mobSkladMenuLoad" style="display: none;">
+                <a href="{$siteurl}sale/{if $id_sex>2}{$childSex[$forChildSex][0]}-tovari-{$childSex[$forChildSex][1]}{else}{$adultSex[$id_sex]}-tovari{/if}/"><i class="n-icon n-icon--sale"></i><span>Ликвидация склада -65%</span></a>
+            <ul>
+                {foreach item=sex key=id_sex from=$allSexs}
+                {if $id_sex>2}{assign var=forChildSex value=$id_sex-2}{/if}
+                <li data-sex="{$id_sex}">
+                    <a href="#"><span>{$sex}</span></a>
+                    <ul>
+                        {if $id_sex>2}
+                        {assign var='newSizes' value=$allSizes.children}
+                        {else}
+                        {assign var='newSizes' value=$allSizes}
+                        {/if}
+                        {foreach item=s key=key from=$newSizes}
+                        {if ($id_sex==2 && $s.rus_caption_men!='') || $id_sex!=2}
+                        {if $key!='children'}
+                        <li>
+                            <a class="" href="{$siteurl}sale/{if $id_sex>2}{$childSex[$forChildSex][0]}-tovari-{$childSex[$forChildSex][1]}{else}{$adultSex[$id_sex]}-tovari{/if}/?saleSize={$key}" data-value="{$key}">{$s.caption}</a>
+                        </li>
+                        {/if}
+                        {/if}
+                        {/foreach}
+                    </ul>
+                </li>
+                {/foreach}
+            </ul>
+                </textarea>
+        </li>
+        {/if}
+
+        <li><a href="/svoy-dizayn/" style="padding: 0 48px;border-bottom: 1px solid #c3c3c3;"><i class="menu-slide__brush-icon"></i>Создать свой дизайн</a></li>
+        {*<li><a href="/kollekciya/bessmertnyj-polk/?from=burger" style="padding: 0 48px;border-bottom: 1px solid #c3c3c3;"><i class="beforeStar" style="position: absolute;left: 15px;"></i>Бессмертный полк</a></li>*}
+        <li><a href="/opt-land/?from=burger" style="padding: 0 48px;border-bottom: 1px solid #c3c3c3;">Опт -70%</a></li>
+        <li class="menu-slide-static">
+            <a href="/partners-land/?from=burger">Партнерская программа</a>
+        </li>
+        <li class="menu-slide-static menu-slide-static_border">
+            <a href="/design-land/">Дизайнерам</a>
+        </li>
+        <li class="menu-slide-static">
+            <a href="/about/">О сервисе</a>
+        </li>
+        <li class="menu-slide-static">
+            <a href="/production/">Производство</a>
+        </li>
+        <li class="menu-slide-static">
+            <a href="/dostavka/">Доставка и оплата</a>
+        </li>
+        <li class="menu-slide-static">
+            <a href="/otzivi/">Отзывы</a>
+        </li>
+        <li class="menu-slide-static">
+            <a href="/faq/">FAQ</a>
+        </li>
+        <li class="menu-slide-static">
+            <a href="/garantii/">Обмен и возврат</a>
+        </li>
+        <li class="menu-slide-static">
+            <a href="/status/">Где мой заказ</a>
+        </li>
+        <li class="menu-slide-static">
+            <a href="/contacts/">Контакты</a>
+        </li>
+        {if $city|replace:' ':''|lower=='москва' && $isRussia}
+        <li class="menu-slide-static">
+            <a href="/print-bar-shop/">Магазин</a>
+        </li>
+        {/if}
+    </ul>
+</div>
+
+<div class="main__page">
+    {if $page.main_page}
+    <div class="n-home-header-mob mb80">
+
+        <div class="n-header-mob canFix n-header-mob-fixed">
+        <div class="n-home-header-mob__container clear">
+            <div class="n-home-header-mob__menu">
+                <button class="menu-slide__btn">
+                    <span></span>
+                </button>
+            </div>
+            <a href="{$siteurl}" class="n-home-heased-mob_logo"></a>
+            <div class="n-home-heased-mob_basket-wrapper clear {if $basket.count>0} red{/if}">
+                <a href="{$siteurl}basket/" class="n-home-heased-mob_basket"  {if !$basket.count}onclick="return false;"{/if}><span class="n-home-basket-count{if $basket.count>0} isset{/if}">{$basket.count}</span></a>
+            </div>
+            <a href="tel:84952680828" class="n-home-heased-mob_tel"></a>
+            <div class="n-home-heased-mob_search"></div>
+        </div>
+        </div>
+    </div>
+    {else}
+    <div class="n-home-header-mob mb80">
+        <div class="n-header-mob canFix n-header-mob-fixed">
+            <div class="n-header-mob__line n-header-mob__line--top">
+                <div class="n-home-header-mob__container clear">
+                    <div class="n-home-header-mob__menu">
+                        <button class="menu-slide__btn">
+                            <span></span>
+                        </button>
+                    </div>
+                    <a href="{$siteurl}" class="n-home-heased-mob_logo"></a>
+                    <div class="n-home-heased-mob_basket-wrapper clear {if $basket.count>0} red{/if}">
+                        <a href="{$siteurl}basket/" class="n-home-heased-mob_basket"  {if !$basket.count}onclick="return false;"{/if}><span class="n-home-basket-count{if $basket.count>0} isset{/if}">{$basket.count}</span></a>
+                    </div>
+                    <a href="tel:84952680828" class="n-home-heased-mob_tel"></a>
+                    <div class="n-home-heased-mob_search"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    {/if}
+    <div class="n-line n-line--top">
+        <div class="n-navbar">
+            <div class="n-navbar__item n-navbar__item--left">
+                <div class="n-link-list">
+                    <div class="n-link-list__item">
+                        <a href="{$siteurl}{$adultSex[1]}-tovari/" class="n-link n-link--border{if $curSex==1 && !$children} active{/if}">Женщинам</a>
+                    </div>
+                    <div class="n-link-list__item">
+                        <a href="{$siteurl}{$adultSex[2]}-tovari/" class="n-link n-link--border{if $curSex==2 && !$children} active{/if}">Мужчинам</a>
+                    </div>
+                    <div class="n-link-list__item">
+                        <a href="{$siteurl}{$childSex[0][0]}-tovari/" class="n-link n-link--border{if $children} active{/if}">Детям</a>
+                    </div>
+                </div>
+            </div>
+            <div class="n-navbar__item n-navbar__item--center">
+                <div class="n-logo">
+                    <a href="{$siteurl}">
+                        <img class="n-logo__img" src="/images/themes/default/new-logo.png" />
+                    </a>
+                </div>
+            </div>
+            <div class="n-navbar__item n-navbar__item--right">
+                <div class="n-link-list">
+                    {if $city|replace:' ':''|lower=='москва' && $isRussia}
+                    <div class="n-link-list__item">
+                        <i class="n-icon n-icon--shop"></i><a href="{$siteurl}print-bar-shop/" class="n-link n-link--border n-link--border-dashed">Магазин</a>
+                    </div>
+                    {/if}
+                    <div class="n-link-list__item">
+                        <a href="{$siteurl}design-land/?from=top" class="n-link n-link--border">Дизайнерам</a>
+                    </div>
+                    <div class="n-link-list__item">
+                        <a href="{$siteurl}opt-land/?from=topOpt" class="n-link n-link--border">Опт</a>
+                    </div>
+                    <div class="n-link-list__item">
+                        <a href="{$siteurl}partners-land/?from=" class="n-link n-link--border">Партнерская программа</a>
+                    </div>
+                    {if $profileflag}
+                        {if $yiiUser->isGuest}
+                            <div class="n-link-list__item">
+                                <a href="#" class="header__menu-item_login n-link n-link&#45;&#45;border">Войти</a>
+                            </div>
+                            <div class="n-link-list__item">
+                                <a href="#" class="header__menu-item_reg n-link n-link&#45;&#45;border">Зарегистрироваться</a>
+                            </div>
+                            {include file="themes/default/block/remindPassword.tpl.html"}
+                            {include file="themes/default/block/loginForm.tpl.html"}
+                            {include file="themes/default/block/registrationForm.tpl.html"}
+                            {include file="themes/default/block/mailConfirmation.tpl.html"}
+                        {else}
+                            <div class="n-link-list__item">
+                                <a href="/profile/" class="header__menu-item_profile n-link n-link&#45;&#45;border">Личный кабинет</a>
+                            </div>
+                            <div class="n-link-list__item">
+                                <a href="/logout/" class="header__menu-item_logout n-link n-link&#45;&#45;border">Выйти</a>
+                            </div>
+                        {/if}
+                    {/if}
+                    <!--<div class="n-link-list__item">-->
+                    <!--<a href="{$siteurl}partners-land/" class="n-link n-link&#45;&#45;border">Войти</a>-->
+                    <!--</div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="n-line n-line--grey">
+        <div class="n-navbar">
+            <div class="n-navbar__item n-navbar__item--left">
+                <div class="n-menu n-menu--shift">
+                    <div class="n-menu__item n-menu__item--sub-menu {if $page.id_category==16 || $page.id_sub_category==16 }active{/if}">
+                        <a class="n-link n-menu__link n-menu__link--sub-menu" href="{$siteurl}{makeUrl curIdent='tovari' id_sex=$curSex children=$children}">Каталог</a>
+                        <div class="n-menu__sub-menu">
+                            <div class="n-sub-menu">
+                                <div class="n-sub-menu__left-img">
+                                    {if $children && $curSex==1}
+                                    {assign var=nameImg value='girl'}
+                                    <img src="/images/themes/default/girl.jpg" />
+                                    {elseif $children && $curSex==2}
+                                    {assign var=nameImg value='boy'}
+                                    <img src="/images/themes/default/boy.jpg" />
+                                    {elseif $children}
+                                    <img src="/images/themes/default/boy.jpg" />
+                                    {elseif $curSex==2}
+                                    {assign var=nameImg value='men'}
+                                    <img src="/images/themes/default/muzhik.jpg" />
+                                    {else}
+                                    {assign var=nameImg value='wom'}
+                                    <img src="/images/themes/default/baba.jpg" />
+                                    {/if}
+                                </div>
+                                <div class="n-sub-menu__title">
+                                    {if $children}
+                                    {$lang.forProdCart[$curSex][101]}
+                                    {else}
+                                    {$lang.forProdCart[$curSex][100]}
+                                    {/if}
+                                </div>
+                                {php}
+                                $this->_tpl_vars['sexAr'] = array($this->_tpl_vars['curSex']);
+                                {/php}
+
+                                {foreach item=sex from=$sexAr}
+                                {assign var=typeBlock value=1}
+                                {foreach item=cat from=$rubrics.up}
+                                {if $cat.id_sub_category == 16 && $cat.visible==1}
+                                {if ((!$partner || ($partner && $partShop.dopType==1)) && $cat.id_category>573) || $cat.id_category<=573}
+                                {if (!$children && $cat.sexs[$sex]) || ($children && $cat.sexs.child[$sex])}
+
+
+
+                                {if $typeBlock==1}
+                                <div class="n-sub-menu__content">
+                                    <div class="n-products-list">
+                                        {/if}
+                                        <div class="n-products-list__item">
+                                            <span class="n-icon n-icon--{$cat.ident} "></span>
+                                            <a href="{$siteurl}{makeUrl curIdent=$cat.ident id_sex=$sex children=$children}" class="n-link n-link--border {if $curIdent==$cat.ident && $sex==$curSex}active{/if}" >
+                                                {$cat.caption}
+                                                {typeLabel changeAkc=$changeAkc id_category=$cat.id_category sale=$sale}
+                                            </a>
+                                        </div>
+                                        {assign var=typeBlock value=$typeBlock+1}
+                                        {if $typeBlock % 5 == 0}
+                                        {assign var=typeBlock value=1}
+                                    </div>
+                                </div>
+                                {/if}
+
+
+                                {/if}
+                                {/if}
+                                {/if}
+                                {/foreach}
+                                {if $typeBlock!=1}
+                            </div>
+                        </div>
+                        {/if}
+                        {/foreach}
+
+
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="n-menu__item {if $page.id_category==24}active{/if}"><a class="n-link n-menu__link" href="{$siteurl}svoy-dizayn/">Свой дизайн</a></div>
+            {*
+            <!--<div class="n-menu__item {if $sale}active{/if}"><a class="n-link n-menu__link" href="{$siteurl}sale/{if $curSex}{if $children}{$childSex[$curSex][0]}-tovari-{$childSex[$curSex][1]}{else}{$adultSex[$curSex]}-tovari{/if}{else}tovari{/if}/">Распродажа до <span class="red">30%</span></a></div>-->
+            *}
+            {*<div class="n-menu__item"><a class="n-link n-menu__link" href="{$siteurl}opt-land/?from=greyLine">Опт <span class="red">-70%</span></a></div>*}
+            <div class="n-menu__item"><a class="n-link n-menu__link" href="{$siteurl}tovari/spartak/"><span class="red">Спартак чемпион!</span></a></div>
+                {*<div class="n-menu__item {if $page.id_category==690}active{/if}"><a class="n-link n-menu__link" href="{$siteurl}kollekciya/bessmertnyj-polk/?from=greyLine"><span class="red beforeStar">Бессмертный полк</span></a></div>*}
+            {if $oldSale}
+            <div class="n-menu__item {if $sale}active{/if}"><a class="n-link n-menu__link" href="{$siteurl}{makeUrl sale=true curIdent='tovari' id_sex=$curSex children=$children}">SALE<span class="red">-65%</span></a></div>
+            {/if}
+            <!--<div class="n-menu__item"><a class="n-link n-menu__link" href="#">Акции</a></div>-->
+        </div>
+    </div>
+    <div class="n-navbar__item n-navbar__item--center">
+        <span class="n-text">8 (495) 268-08-28</span><br />
+        <span class="n-text n-text--small n-text--mute">Ежедневно: 08:00-24:00</span>
+    </div>
+    <div class="n-navbar__item n-navbar__item--right">
+        <form class="search-form"  action="{$siteurl}{makeUrl curIdent='tovari' id_sex=$curSex children=$children}">
+            <div class="n-form-sarch">
+                <input type="hidden" name="search" value="yes">
+                <input type="text" class="n-form-sarch__text" name="heshtag" placeholder="Поиск" value="{$heshtag}" />
+                <button type="submit" class="n-form-sarch__button"></button>
+            </div>
+        </form>
+<svg style="display: none;" viewBox="0 0 21 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+    <g id="icon-likedProductsHeart">
+        <path d="M 0.983926 2.47637C 2.91335 -0.299729 6.77721 -0.815391 9.46169 1.30377C 9.79579 1.56894 10.1149 1.85584 10.3376 2.04548C 11.346 1.45265 12.2308 0.741377 13.2459 0.372969C 15.7906 -0.550768 18.4367 0.3458 19.9585 2.48126C 21.4442 4.56565 21.3757 7.42597 19.5253 9.35006C 16.759 12.2256 13.8412 14.9604 10.9841 17.7523C 10.6277 18.1006 10.2552 18.0712 9.90771 17.7294C 7.02332 14.8881 4.5922 12.5565 1.76015 9.66848C 0.936038 8.82842 0.0506756 7.22655 0.0016744 5.67685C -0.0417585 4.18909 0.77233 2.78066 0.983926 2.47637Z"/>
+
+    </g>
+</defs>
+</svg>
+
+<svg style="display: none;" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+    <g id="icon-mobileLike">
+        
+        <path id="icon-mobileLike1" d="M 28 14.0001C 28 21.7321 21.732 28.0001 14 28.0001C 6.26801 28.0001 0 21.7321 0 14.0001C 0 6.26808 6.26801 6.61599e-05 14 6.61599e-05C 18.1814 6.61599e-05 28 2.14565e-05 28 2.14565e-05C 28 2.14565e-05 28 10.4495 28 14.0001Z"/>
+        <path id="icon-mobileLike2" d="M 0.843365 2.20122C 2.49716 -0.266425 5.80903 -0.724792 8.11002 1.15891C 8.39639 1.39461 8.66988 1.64963 8.86079 1.8182C 9.72515 1.29125 10.4836 0.659002 11.3536 0.331528C 13.5348 -0.489571 15.8029 0.307378 17.1073 2.20557C 18.3807 4.05835 18.322 6.60086 16.736 8.31116C 14.3648 10.8672 11.8639 13.2981 9.41492 15.7798C 9.10946 16.0894 8.79015 16.0633 8.49233 15.7595C 6.01999 13.2339 3.93617 11.1613 1.5087 8.5942C 0.802319 7.84748 0.0434362 6.4236 0.0014352 5.04609C -0.035793 3.72363 0.661997 2.4717 0.843365 2.20122ZM 9.02689 14.7177C 11.3131 12.4099 13.6465 10.0944 15.8697 7.72335C 17.3717 6.12028 17.2386 3.69948 15.7399 2.21329C 14.2302 0.715996 11.904 0.698125 10.2807 2.17079C 8.9782 3.35269 8.9782 3.35269 7.65135 2.15823C 6.03145 0.70054 3.76482 0.702472 2.24467 2.16355C 0.713544 3.63718 0.554608 6.0372 2.03849 7.66153C 4.87928 10.7706 6.58176 12.3717 9.02689 14.7177Z"/>
+    </g>
+</defs>
+</svg>
+
+{assign var="favCount" value="3"} {* 
+
+
+Заглушка колличества комментариев
+Убрать когда будет работать переменная favCount
+=================================
+
+*}
+
+       <link rel="stylesheet" media="screen" href="/public/test/likes/style.css" >
+       <a {if !empty($favProducts)}href="/favorites/"{/if}
+            class="likedProducts {if !empty($favProducts)}likedProducts--active{/if}">
+           <svg class="likedProducts__heart" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="21" height="18" viewBox="0 0 21 18" version="1.1">
+               <use xlink:href="#icon-likedProductsHeart" fill="inherit"></use>
+           </svg>
+           {if $favCount}<div class="likedProducts__count">{$favCount}</div>{/if}
+           <div class="likedProducts__tooltip">
+               <span>Избранное</span>
+               <svg class="likedProducts__tooltipSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36.02 9.5" width="36px" height="9.5px"><path fill="inherit" d="M36,0A21.82,21.82,0,0,0,18,9.5h0A21.82,21.82,0,0,0,0,0Z"/></svg>
+           </div>
+       </a>
+
+        <div class="n-basket-min {if $basket.count==0}grey{/if}">
+            {$blocks.basket.content}
+        </div>
+    </div>
+    <a href="{$siteurl}status/" class="n-navbar__item n-navbar__item--bottom">
+        Где мой заказ?
+    </a>
+</div>
+</div>
+
+    {include file="themes/default/banners/banner-container.html"}
+
+
+{/if}
+
+{/if}

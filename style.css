@@ -1,0 +1,283 @@
+.likedProducts {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    vertical-align: middle;
+    margin: 0 10px 0 10px;
+    width: 33px;
+    height: 27px;
+    text-align: center;
+}
+.likedProducts__count {
+    display: inline-block;
+    font: 400 14px/1em 'Pt sans';
+    color: #fff;
+    padding: 1px 5px 0;
+    border-radius: 50px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 10%;
+    height: 1em;
+    margin: auto;
+    text-align: center
+}
+.likedProducts__heart {
+    width: 100%;
+    height: 100%;
+    box-sizing: content-box;
+}
+.likedProducts__tooltip {
+    display: block;
+    color:#fff;
+    font:400 14px/16px 'Pt sans';
+    padding: 4px 16px;
+    border-radius: 50px;
+    position: absolute;
+    left:50%;
+    top:0;
+    transform: translate(-50%,-150%) rotate(15deg);
+    opacity: 0;
+    transform-origin: 50% 230%;
+    transition: all .17s ease;
+}
+.likedProducts__tooltipSvg {
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    width:36px;
+    margin: auto;
+}
+
+.likedProducts:hover .likedProducts__tooltip{
+    display: inline-block;
+    transform: translate(-50%,-150%) rotate(0deg);
+    opacity: 1;
+}
+
+.likedProducts__tooltip {
+    background: rgba(0, 0, 0, 0.67);
+}
+.likedProducts__tooltipSvg,
+.likedProducts__heart {
+    fill: rgba(0,0,0,0.67);
+}
+
+.search-form {
+    width:37%;
+}
+.n-form-sarch {
+    min-width: auto;
+}
+.filter-50 {
+    width:40%;
+}
+.filter__likedProducts {
+    display: block;
+    float: left;
+    width: 20%;
+    margin: 10px 0;
+    height: 41px;
+    text-align: center;
+    background: rgba(0,0,0,0.67);
+    white-space: nowrap;
+}
+.filter__likedProducts {
+    display: none;
+}
+.filter__likedProducts .likedProducts__heart {
+    fill:#fff;
+}
+.filter__likedProducts .likedProducts__count {
+    color: black;
+}
+.filter__likedProducts .likedProducts__tooltip {
+    top: -5px;
+}
+.n-products-page__head .likedProducts{
+    display: none;
+}
+.n-products-page__head.filter-fixed .likedProducts{
+    display: inline-block;
+    position: absolute;
+    right: 180px;
+    top: 5px;
+}
+.containerF  {
+    position: relative;
+}
+@media (max-width:1070px) {
+    .containerF .likedProducts {
+        display: none !important;
+    }
+}
+
+
+
+.fixed__likedProducts {
+    display: block;
+    position: fixed;
+    z-index: 98;
+    top: 80px;
+    left: 105%;
+    width: 70px;
+    height: 51px;
+    border-radius: 3px;
+    background: rgba(0,0,0,0.67);
+    text-align: center;
+    fill:#fff; 
+    transition: transform .4s ease;
+}
+
+.fixed__likedProducts--show {
+    left: 100%;
+    transform: translateX(-120%);
+
+}
+
+.fixed__likedProducts .likedProducts {
+    display: inline-block;
+}
+
+.fixed__likedProducts .likedProducts__heart {
+    fill:#fff;
+}
+.fixed__likedProducts .likedProducts__count {
+    color: black;
+}
+
+
+
+
+.shirt__like {
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    cursor: pointer;
+    transform: scale(1);
+    z-index: 100;
+    padding: 0px 10px 10px;
+    box-sizing: content-box;
+}
+
+.shirt__like svg {
+    fill:rgba(255, 0, 55,0);
+}
+.shirt__like-path {
+    stroke: #666;
+    stroke-width: 2px;
+    stroke-dasharray: 68.7548904;
+}
+.shirt__like--active .shirt__like-path {
+    fill:rgba(255, 0, 55,1);
+    stroke: #ff0037;
+}
+.shirt__like--animate {
+    transition: top .4s cubic-bezier(0.1, 0.56, 0.41, 1.02),left .4s cubic-bezier(0, 1.36, 1, 1);
+} 
+
+.shirt__like-path1 {
+    stroke-dashoffset: 0;
+    -webkit-transition: all .5s ease;
+    -moz-transition: all .5s ease;
+    -ms-transition: all .5s ease;
+    -o-transition: all .5s ease;
+    transition: all .5s ease;
+}
+.shirt__like-path2 {
+    stroke: #ff0037;
+    opacity: 0;
+    stroke-dashoffset: -68.74;
+    -webkit-transition: all .5s ease;
+    -moz-transition: all .5s ease;
+    -ms-transition: all .5s ease;
+    -o-transition: all .5s ease;
+    transition: all .5s ease;
+}
+.shirt__like:hover .shirt__like-path1 {
+    stroke-dashoffset: 20;
+    -webkit-transition: all .5s ease;
+    -moz-transition: all .5s ease;
+    -ms-transition: all .5s ease;
+    -o-transition: all .5s ease;
+    transition: all .5s ease;
+}
+.shirt__like:hover .shirt__like-path2 {
+    stroke-dashoffset: -48;
+    opacity: 1;
+    -webkit-transition: all .5s ease .25s;
+    -moz-transition: all .5s ease .25s;
+    -ms-transition: all .5s ease .25s;
+    -o-transition: all .5s ease .25s;
+    transition: all .5s ease .25s;
+}
+.shirt__like--active svg{
+    -webkit-transition: all .5s ease .4s;
+    -moz-transition: all .5s ease .4s;
+    -ms-transition: all .5s ease .4s;
+    -o-transition: all .5s ease .4s;
+    transition: all .5s ease .4s;
+}
+.shirt__like--active .shirt__like-path1,
+.shirt__like:hover.shirt__like--active .shirt__like-path1{
+    stroke: #ff0037;
+    stroke-dashoffset: 68.74;
+    -webkit-transition: all .5s ease .4s;
+    -moz-transition: all .5s ease .4s;
+    -ms-transition: all .5s ease .4s;
+    -o-transition: all .5s ease .4s;
+    transition: all .5s ease .4s;
+}
+.shirt__like--active .shirt__like-path2,
+.shirt__like:hover.shirt__like--active .shirt__like-path2{
+    stroke: #ff0037;
+    stroke-dashoffset: 0;
+    opacity: 1;
+    -webkit-transition: fill .5s ease 1.6s, stroke-dashoffset .5s linear;
+    -moz-transition: fill .5s ease 1.6s, stroke-dashoffset .5s linear;
+    -ms-transition: fill .5s ease 1.6s, stroke-dashoffset .5s linear;
+    -o-transition: fill .5s ease 1.6s, stroke-dashoffset .5s linear;
+    transition: fill .5s ease 1.6s, stroke-dashoffset .5s linear;
+}
+
+.filter-50:nth-of-type(2) {
+    padding-left:0;
+}
+@media (max-width:500px) {
+    .filter-50:nth-of-type(2) .icon-filter{
+        display: none;
+    }
+}
+
+/* ====================== */
+
+@media screen and (max-width: 1000px){
+    .likedProducts {
+        display: none;
+    }
+
+    .filter__likedProducts {
+        display: block;
+    }
+    .filter__likedProducts .likedProducts {
+        display: inline-block;
+    }
+    .likedProducts__tooltip {
+        display: none !important;
+    }
+}
+@media (max-width: 1000px) and (min-width:750px){
+    .shirt__like {
+        left:22%;   
+    }   
+}
+@media (max-width: 750px) and (min-width:600px){
+    .shirt__like {
+        left:15%;   
+    }   
+}
